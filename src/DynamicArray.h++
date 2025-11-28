@@ -23,7 +23,9 @@ private:
     }
 
     public:
-    DynamicArray() : _data(nullptr), _size(0), _capacity(0) {};
+    DynamicArray() : _data(nullptr), _size(0), _capacity(1) {
+        _data = new T[_capacity];
+    };
 
     DynamicArray(const DynamicArray& other) : _data(nullptr), _size(other._size), _capacity(other._capacity) {
         _data = new T[_capacity];
@@ -83,11 +85,11 @@ private:
         return _data[index];
     }
 
-    size_t size() const {
+    [[nodiscard]] size_t size() const {
         return _size;
     }
 
-    size_t capacity() const {
+    [[nodiscard]] size_t capacity() const {
         return _capacity;
     }
 
