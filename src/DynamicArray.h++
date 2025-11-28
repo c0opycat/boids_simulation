@@ -14,7 +14,7 @@ private:
 
     void resize(const size_t new_capacity) {
         T* new_data = new T[new_capacity];
-        for (int i = 0; i < _size; i++) {
+        for (size_t i = 0; i < _size; i++) {
             new_data[i] = _data[i];
         }
         delete[] _data;
@@ -29,7 +29,7 @@ private:
 
     DynamicArray(const DynamicArray& other) : _data(nullptr), _size(other._size), _capacity(other._capacity) {
         _data = new T[_capacity];
-        for (int i = 0; i < other._size; i++) {
+        for (size_t i = 0; i < other._size; i++) {
             _data[i] = other._data[i];
         }
     }
@@ -40,7 +40,7 @@ private:
         }
 
         T* tmp = new T[_capacity];
-        for (int i = 0; i < other._size; i++) {
+        for (size_t i = 0; i < other._size; i++) {
             tmp[i] = other._data[i];
         }
         delete[] _data;

@@ -39,3 +39,13 @@
 
 # debug information files
 *.dwo
+
+# build repositories
+cmake-build-debug/
+build/
+tests/cmake-build-debug/
+
+# IDE
+.idea/
+.vscode/
+

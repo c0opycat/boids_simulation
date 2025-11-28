@@ -1,10 +1,18 @@
 cmake_minimum_required(VERSION 3.20)
-project(mon_projet_cpp)
+project(boids_simulation)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(mon_projet_cpp
+find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
+
+add_executable(boids_simulation
         src/main.cpp
         src/DynamicArray.cpp
         src/DynamicArray.h++
 )
+
+target_link_libraries(boids_simulation PRIVATE sfml-graphics)
+
+# Enable testing
+enable_testing()
+
