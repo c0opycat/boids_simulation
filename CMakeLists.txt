@@ -5,4 +5,6 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(mon_projet_cpp
         src/main.cpp
+        src/DynamicArray.cpp
+        src/DynamicArray.h++
 )
