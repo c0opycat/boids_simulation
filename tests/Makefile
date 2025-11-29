@@ -4,7 +4,7 @@ CXXFLAGS = -std=c++20 -Wall -Wextra -I../src -Ilib/googletest/googletest/include
 LDFLAGS = -pthread
 
 # Test source files
-TEST_SRCS = gtest_main.cpp
+TEST_SRCS = gtest_main.cpp Vec2_tests.cpp
 
 # Project source files to be tested
 PROJECT_SRCS =

@@ -7,8 +7,9 @@ find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
 
 add_executable(boids_simulation
         src/main.cpp
-        src/DynamicArray.cpp
-        src/DynamicArray.h++
+        src/containers/DynamicArray.h++
+        src/containers/Vec2.hpp
+        src/Utils.hpp
 )
 
 target_link_libraries(boids_simulation PRIVATE sfml-graphics)

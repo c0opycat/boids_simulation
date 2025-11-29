@@ -4,7 +4,7 @@ CXXFLAGS = -std=c++20 -Wall -Wextra -Isrc -Ilib/SFML/include -DSFML_STATIC
 LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 
 # Source files and object files
-SRCS = src/main.cpp src/DynamicArray.cpp
+SRCS = src/main.cpp
 OBJS = $(patsubst src/%.cpp,build/%.o,$(SRCS))
 
 # Executable name
