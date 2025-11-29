@@ -7,7 +7,6 @@
 
 template <typename T>
 class DynamicArray {
-private:
     T* _data;
     size_t _size;
     size_t _capacity;
@@ -22,7 +21,7 @@ private:
         _capacity = new_capacity;
     }
 
-    public:
+public:
     DynamicArray() : _data(nullptr), _size(0), _capacity(1) {
         _data = new T[_capacity];
     };
