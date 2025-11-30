@@ -25,4 +25,7 @@ namespace Utils {
             throw std::invalid_argument("Division by zero.");
         }
     }
+
+    bool is_between(const size_t val, const size_t min, const size_t max);
+    bool is_between(const float val, const float min, const float max);
 }

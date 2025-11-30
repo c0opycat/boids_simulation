@@ -10,6 +10,9 @@ add_executable(boids_simulation
         src/containers/DynamicArray.h++
         src/containers/Vec2.hpp
         src/Utils.hpp
+        src/Settings.cpp
+        src/Settings.hpp
+        src/Utils.cpp
 )
 
 target_link_libraries(boids_simulation PRIVATE sfml-graphics)

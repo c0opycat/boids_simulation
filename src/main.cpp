@@ -3,9 +3,12 @@
 //
 
 #include <iostream>
+#include "Settings.hpp"
 
 int main() {
     std::cout << "Hello World!" << std::endl;
+    bd::Settings s;
+    s.display();
 
     return 0;
 }
