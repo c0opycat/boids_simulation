@@ -5,25 +5,29 @@
 #pragma once
 #include "containers/Vec2.hpp"
 
-class Boid {
-private:
-    Vec2<float> _position;
-    Vec2<float> _speed;
+namespace bd {
+    class Boid {
+    private:
+        Vec2<float> _position;
+        Vec2<float> _speed;
 
-public:
+    public:
 
-    Boid(float x, float y, float speedx, float speedy);
+        Boid(float x, float y, float speedx, float speedy);
 
-    const Vec2<float>& getPosition() const;
-    const Vec2<float>& getSpeed() const;
+        const Vec2<float>& getPosition() const;
+        const Vec2<float>& getSpeed() const;
 
-    void setPosition(const Vec2<float>& newPosition);
-    void setSpeed(const Vec2<float>& newSpeed);
+        void setPosition(const Vec2<float>& newPosition);
+        void setSpeed(const Vec2<float>& newSpeed);
 
-    void UpdatePosition(float dt);
-    void addSpeed(const Vec2<float>& newSpeed);
+        void UpdatePosition(float dt);
+        void addSpeed(const Vec2<float>& newSpeed);
 
+    };
 
-};
+    std::ostream& operator<<(std::ostream& os, const Boid& boid);
+
+}
 
 

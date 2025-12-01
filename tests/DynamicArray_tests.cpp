@@ -27,9 +27,9 @@ TEST_F(DynamicArrayTest, PushBackIncreasesSize) {
 }
 
 TEST_F(DynamicArrayTest, CapacityDoublesWhenFull) {
-    DynamicArray<int> arr;
+    DynamicArray<size_t> arr;
     const size_t capacity = arr.capacity();
-    for (int i = 0; i < capacity; i++) {
+    for (size_t i = 0; i < capacity; i++) {
         arr.push_back(i);
     }
 

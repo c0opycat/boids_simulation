@@ -4,6 +4,8 @@
 
 #include "Boid.hpp"
 
+using namespace bd;
+
 Boid::Boid(float x, float y, float speedx, float speedy)
     : _position(Vec2<float>(x, y)), _speed(Vec2<float>(speedx, speedy))
 {
@@ -30,6 +32,10 @@ void Boid::addSpeed(const Vec2<float> &newSpeed) {
 
 void Boid::UpdatePosition(float dt) {
     _position += _speed * dt;
+}
+
+std::ostream &bd::operator<<(std::ostream& os, const Boid& boid) {
+    return os << "Position : " <<boid.getPosition() << " / vitesse : " << boid.getSpeed() << std::endl;
 }
 
 
