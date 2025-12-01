@@ -1,0 +1,29 @@
+//
+// Created by arthur on 01/12/2025.
+//
+
+#pragma once
+#include "containers/Vec2.hpp"
+
+class Boid {
+private:
+    Vec2<float> _position;
+    Vec2<float> _speed;
+
+public:
+
+    Boid(float x, float y, float speedx, float speedy);
+
+    const Vec2<float>& getPosition() const;
+    const Vec2<float>& getSpeed() const;
+
+    void setPosition(const Vec2<float>& newPosition);
+    void setSpeed(const Vec2<float>& newSpeed);
+
+    void UpdatePosition(float dt);
+    void addSpeed(const Vec2<float>& newSpeed);
+
+
+};
+
+
