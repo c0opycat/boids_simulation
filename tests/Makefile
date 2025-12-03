@@ -4,7 +4,7 @@ CXXFLAGS = -std=c++20 -Wall -Wextra -I../src -Ilib/googletest/googletest/include
 LDFLAGS = -pthread
 
 # Test source files
-TEST_SRCS = gtest_main.cpp Vec2_tests.cpp DynamicArray_tests.cpp Boid_tests.cpp Settings_tests.cpp Utils_tests.cppSettings_tests.cpp Utils_tests.cpp
+TEST_SRCS = gtest_main.cpp Vec2_tests.cpp DynamicArray_tests.cpp Boid_tests.cpp Settings_tests.cpp Utils_tests.cpp
 
 # Project source files to be tested
 PROJECT_SRCS = ../src/Boid.cpp ../src/Settings.cpp ../src/Utils.cpp
