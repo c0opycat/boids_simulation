@@ -21,7 +21,7 @@ namespace bd {
 
     public:
         Settings();
-        // Settings(const std::string configFilePath);
+        Settings(const std::string& configFilePath);
 
         size_t getN() const;
         size_t getWidth() const;
@@ -46,5 +46,6 @@ namespace bd {
         void setWAli(const float alignment_w);
 
         void display() const;
+        void saveToFile(const std::string& configFilePath) const;
     };
 }
