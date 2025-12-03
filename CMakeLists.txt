@@ -12,9 +12,13 @@ add_executable(boids_simulation
         src/Utils.hpp
         src/Boid.cpp
         src/Boid.hpp
+        src/Settings.cpp
+        src/Settings.hpp
+        src/Utils.cpp
 )
 
 target_link_libraries(boids_simulation PRIVATE sfml-graphics)
 
-
+# Enable testing
+enable_testing()
 

@@ -8,9 +8,14 @@ add_executable(tests_run gtest_main.cpp
         Vec2_tests.cpp
         DynamicArray_tests.cpp
         Boid_tests.cpp
+        Settings_tests.cpp
+        Utils_tests.cpp
         )
 
 target_sources( tests_run PRIVATE
         ../src/Boid.cpp
+        ../src/Settings.cpp
+        ../src/Utils.cpp
         )
+
 target_link_libraries(tests_run gtest gtest_main)
