@@ -2,7 +2,6 @@
 #include "../src/containers/Vec2.hpp"
 #include <sstream>
 
-// Test fixture for Vec2 tests
 class Vec2Test : public ::testing::Test {
 protected:
     Vec2<int> v_int1{3, 4};
@@ -226,15 +225,15 @@ TEST_F(Vec2Test, Length) {
     EXPECT_FLOAT_EQ(vf.length(), 5.0f);
 }
 
-TEST_F(Vec2Test, Normalise) {
+TEST_F(Vec2Test, Normalize) {
     Vec2<float> v(3.0f, 4.0f);
-    Vec2<float> normalised = v.normalise();
+    Vec2<float> normalised = v.normalize();
     EXPECT_FLOAT_EQ(normalised.getX(), 0.6f);
     EXPECT_FLOAT_EQ(normalised.getY(), 0.8f);
     EXPECT_FLOAT_EQ(normalised.length(), 1.0f);
 
     Vec2<float> v_zero(0.0f, 0.0f);
-    Vec2<float> normalised_zero = v_zero.normalise();
+    Vec2<float> normalised_zero = v_zero.normalize();
     EXPECT_FLOAT_EQ(normalised_zero.getX(), 0.0f);
     EXPECT_FLOAT_EQ(normalised_zero.getY(), 0.0f);
 }
@@ -244,4 +243,35 @@ TEST_F(Vec2Test, OutputStream) {
     std::stringstream ss;
     ss << v;
     EXPECT_EQ(ss.str(), "(7, 8)");
+}
+
+TEST_F(Vec2Test, NormalizeMax) {
+    // Length greater than max
+    Vec2<float> v1(3.0f, 4.0f);
+    float max1 = 2.5f;
+    Vec2<float> normalized_max1 = v1.normalize_max(max1);
+    EXPECT_FLOAT_EQ(normalized_max1.getX(), 1.5f);
+    EXPECT_FLOAT_EQ(normalized_max1.getY(), 2.0f);
+    EXPECT_FLOAT_EQ(normalized_max1.length(), max1);
+
+    Vec2<float> v2(1.0f, 1.0f);
+    float max2 = 2.0f;
+    Vec2<float> normalized_max2 = v2.normalize_max(max2);
+    EXPECT_FLOAT_EQ(normalized_max2.getX(), 1.0f);
+    EXPECT_FLOAT_EQ(normalized_max2.getY(), 1.0f);
+    EXPECT_FLOAT_EQ(normalized_max2.length(), v2.length());
+
+    Vec2<float> v3(3.0f, 4.0f);
+    float max3 = 5.0f;
+    Vec2<float> normalized_max3 = v3.normalize_max(max3);
+    EXPECT_FLOAT_EQ(normalized_max3.getX(), 3.0f);
+    EXPECT_FLOAT_EQ(normalized_max3.getY(), 4.0f);
+    EXPECT_FLOAT_EQ(normalized_max3.length(), max3);
+
+    Vec2<float> v_zero(0.0f, 0.0f);
+    float max_zero = 1.0f;
+    Vec2<float> normalized_max_zero = v_zero.normalize_max(max_zero);
+    EXPECT_FLOAT_EQ(normalized_max_zero.getX(), 0.0f);
+    EXPECT_FLOAT_EQ(normalized_max_zero.getY(), 0.0f);
+    EXPECT_FLOAT_EQ(normalized_max_zero.length(), 0.0f);
 }

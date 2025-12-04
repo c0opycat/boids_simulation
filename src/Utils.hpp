@@ -7,6 +7,7 @@
 #include <cmath>
 #include <type_traits>
 #include <stdexcept>
+#include <random>
 
 template <typename T>
 bool is_close_to_zero(const T val) {
@@ -19,6 +20,18 @@ bool is_close_to_zero(const T val) {
 }
 
 namespace Utils {
+    // Random number generation
+    class Random {
+    public:
+        static void init();
+        static float rand_float(const float min, const float max);
+        static size_t rand_sizet(const size_t min, const size_t max);
+
+    private:
+        static std::mt19937 _eng;
+        static bool _initialised;
+    };
+
     template <typename T>
     void check_denominator(const T denominator) {
         if (is_close_to_zero(denominator)) {

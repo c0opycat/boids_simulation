@@ -15,6 +15,8 @@ add_executable(boids_simulation
         src/Settings.cpp
         src/Settings.hpp
         src/Utils.cpp
+        src/Flock.cpp
+        src/Flock.hpp
 )
 
 target_link_libraries(boids_simulation PRIVATE sfml-graphics)

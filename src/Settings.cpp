@@ -9,7 +9,7 @@
 
 namespace bd {
     Settings::Settings() :
-    _n(50),
+    _n(n_def),
     _width(800),
     _height(600),
     _r(50),
@@ -21,7 +21,7 @@ namespace bd {
     _wali(0.125f) {}
 
     Settings::Settings(const std::string& configFilePath) :
-    _n(50),
+    _n(n_def),
     _width(800),
     _height(600),
     _r(50),
@@ -101,7 +101,7 @@ namespace bd {
     }
 
     void Settings::setN(const size_t nb_boids) {
-        if (Utils::is_between(nb_boids, 10, 200)) {
+        if (Utils::is_between(nb_boids, n_min, n_max)) {
             _n = nb_boids;
         }
     }
@@ -115,7 +115,7 @@ namespace bd {
     }
 
     void Settings::setR(const size_t percep_radius) {
-        if (Utils::is_between(percep_radius, 10, 100)) {
+        if (Utils::is_between(percep_radius, r_min, r_max)) {
             _r = percep_radius;
         }
     }
@@ -129,7 +129,7 @@ namespace bd {
     }
 
     void Settings::setDMin(const size_t min_dist) {
-        if (Utils::is_between(min_dist, 5, 50)) {
+        if (Utils::is_between(min_dist, dmin_min, dmin_max)) {
             _dmin = min_dist;
         }
     }

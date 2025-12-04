@@ -7,6 +7,16 @@
 #include <iostream>
 
 namespace bd {
+    enum Settings_bounds {
+        n_def = 50,
+        n_min = 10,
+        n_max = 200,
+        r_min = 10,
+        r_max = 100,
+        dmin_min = 5,
+        dmin_max = 50,
+    };
+
     class Settings {
         size_t _n; // Number of boids
         size_t _width; // Window's width

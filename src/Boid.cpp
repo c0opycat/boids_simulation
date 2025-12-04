@@ -6,6 +6,8 @@
 
 using namespace bd;
 
+Boid::Boid() : _position(Vec2<float>(0.f,0.f)), _speed(Vec2<float>(0.f,0.f)) {}
+
 Boid::Boid(float x, float y, float speedx, float speedy)
     : _position(Vec2<float>(x, y)), _speed(Vec2<float>(speedx, speedy))
 {

@@ -5,8 +5,10 @@
 #include <iostream>
 #include "Settings.hpp"
 #include "Boid.hpp"
+#include "Utils.hpp"
 
 int main() {
+    Utils::Random::init();
     std::cout << "Hello World!" << std::endl;
     bd::Settings s;
     s.display();

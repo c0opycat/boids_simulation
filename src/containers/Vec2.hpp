@@ -135,11 +135,20 @@ public:
         return std::hypot(_x, _y);
     }
 
-    Vec2 normalise() const {
+    Vec2 normalize() const {
         Vec2 res(_x, _y);
         T length = res.length();
         if (length != 0) {
             return res / length;
+        }
+        return res;
+    }
+
+    Vec2 normalize_max(const T max) {
+        Vec2 res(_x, _y);
+        T length = res.length();
+        if (length != 0 && length > max) {
+            return res / length * max;
         }
         return res;
     }

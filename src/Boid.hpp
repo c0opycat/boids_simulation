@@ -12,7 +12,7 @@ namespace bd {
         Vec2<float> _speed;
 
     public:
-
+        Boid();
         Boid(float x, float y, float speedx, float speedy);
 
         const Vec2<float>& getPosition() const;

@@ -38,14 +38,13 @@ public:
             return *this;
         }
 
-        T* tmp = new T[_capacity];
-        for (size_t i = 0; i < other._size; i++) {
-            tmp[i] = other._data[i];
-        }
         delete[] _data;
-        _data = tmp;
         _size = other._size;
         _capacity = other._capacity;
+        _data = new T[_capacity];
+        for (size_t i = 0; i < _size; i++) {
+            _data[i] = other._data[i];
+        }
 
         return *this;
     }
