@@ -3,7 +3,7 @@
 //
 
 #include "Flock.hpp"
-#include "Utils.hpp"
+#include "utils/Utils.hpp"
 #include <cmath>
 
 bd::Flock::Flock(Settings& settings) : _settings(settings) {

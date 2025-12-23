@@ -5,6 +5,10 @@
 #pragma once
 #include "containers/Vec2.hpp"
 
+/**
+ * @namespace bd
+ * @brief The main namespace for the boids simulation project.
+ */
 namespace bd {
     class Boid {
     private:

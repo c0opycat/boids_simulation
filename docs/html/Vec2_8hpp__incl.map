@@ -1,0 +1,16 @@
+<map id="src/containers/Vec2.hpp" name="src/containers/Vec2.hpp">
+<area shape="rect" id="Node000001" title="Contains the declaration of the Vec2 template class." alt="" coords="50,5,226,31"/>
+<area shape="rect" id="Node000002" href="$Utils_8hpp.html" title="Contains various utility functions and classes." alt="" coords="76,79,200,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="141,31,141,65,135,65,135,31"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,152,68,177"/>
+<area shape="poly" id="edge7_Node000001_Node000003" title=" " alt="" coords="119,33,92,53,67,80,52,109,44,139,38,137,47,107,62,77,89,49,116,29"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="225,79,305,104"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="160,28,233,69,231,74,157,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="123,106,66,146,63,142,120,102"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="92,152,184,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="141,104,141,138,135,138,135,104"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="208,152,295,177"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="158,102,223,142,220,147,155,106"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="319,152,391,177"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="174,101,308,145,306,150,172,107"/>
+</map>

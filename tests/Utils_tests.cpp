@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../src/Utils.hpp"
+#include "../src/utils/Utils.hpp"
 
 TEST(UtilsTest, IsCloseToZeroFloat) {
     ASSERT_TRUE(is_close_to_zero(0.0000000001f));

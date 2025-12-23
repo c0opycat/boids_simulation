@@ -7,7 +7,7 @@ LDFLAGS = -pthread
 TEST_SRCS = gtest_main.cpp Vec2_tests.cpp DynamicArray_tests.cpp Boid_tests.cpp Settings_tests.cpp Utils_tests.cpp Flock_tests.cpp CohesionRule_tests.cpp
 
 # Project source files to be tested
-PROJECT_SRCS = ../src/Boid.cpp ../src/Settings.cpp ../src/Utils.cpp ../src/Flock.cpp ../src/rules/CohesionRule.cpp
+PROJECT_SRCS = ../src/Boid.cpp ../src/Settings.cpp ../src/utils/Utils.cpp ../src/Flock.cpp ../src/rules/CohesionRule.cpp
 
 # GoogleTest source files
 GTEST_SRCS = lib/googletest/googletest/src/gtest-all.cc

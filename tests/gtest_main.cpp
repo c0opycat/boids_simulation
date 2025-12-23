@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "../src/Utils.hpp"
+#include "../src/utils/Utils.hpp"
 
 int main(int argc, char **argv) {
     Utils::Random::init();

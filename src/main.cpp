@@ -5,7 +5,7 @@
 #include <iostream>
 #include "Settings.hpp"
 #include "Boid.hpp"
-#include "Utils.hpp"
+#include "utils/Utils.hpp"
 
 int main() {
     Utils::Random::init();
