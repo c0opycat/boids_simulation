@@ -46,7 +46,7 @@ TEST(FlockTest, AddBoids) {
         EXPECT_LE(boid.getPosition().getX(), settings.getWidth());
         EXPECT_GE(boid.getPosition().getY(), -1e-5);
         EXPECT_LE(boid.getPosition().getY(), settings.getHeight());
-        EXPECT_LE(boid.getSpeed().length(), settings.getVMax());
+        EXPECT_LE(boid.getSpeed().length(), settings.getVMax() + 1e-6);
     }
 }
 

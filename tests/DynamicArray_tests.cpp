@@ -13,15 +13,18 @@ protected:
 
 TEST_F(DynamicArrayTest, DefaultConstructor) {
     const DynamicArray<int> arr;
-    EXPECT_EQ(arr.size(), 0);
-    EXPECT_EQ(arr.capacity(), 1);
+    const size_t exp_size = 0;
+    const size_t exp_cap = 1;
+    EXPECT_EQ(arr.size(), exp_size);
+    EXPECT_EQ(arr.capacity(), exp_cap);
 }
 
 TEST_F(DynamicArrayTest, PushBackIncreasesSize) {
     array_int.push_back(3);
     array_int.push_back(4);
 
-    EXPECT_EQ(array_int.size(), 2);
+    const size_t exp_size = 2;
+    EXPECT_EQ(array_int.size(), exp_size);
     EXPECT_EQ(array_int[0], 3);
     EXPECT_EQ(array_int[1], 4);
 }
@@ -34,8 +37,10 @@ TEST_F(DynamicArrayTest, CapacityDoublesWhenFull) {
     }
 
     arr.push_back(50);
-    EXPECT_EQ(arr.capacity(), 2);
-    EXPECT_EQ(arr[capacity], 50);
+    const size_t exp_cap = 2;
+    const size_t exp_val = 50;
+    EXPECT_EQ(arr.capacity(), exp_cap);
+    EXPECT_EQ(arr[capacity], exp_val);
 }
 
 TEST_F(DynamicArrayTest, PopBackReducesSize) {
@@ -47,14 +52,16 @@ TEST_F(DynamicArrayTest, PopBackReducesSize) {
 
     arr.pop_back();
 
-    EXPECT_EQ(arr.size(), 2);
+    const size_t exp_size = 2;
+    EXPECT_EQ(arr.size(), exp_size);
     EXPECT_EQ(arr[1], 2);
 }
 
 TEST_F(DynamicArrayTest, PopBackOnEmptyDoesNothing) {
     DynamicArray<int> arr;
     EXPECT_NO_THROW(arr.pop_back());
-    EXPECT_EQ(arr.size(), 0);
+    const size_t exp_size = 0;
+    EXPECT_EQ(arr.size(), exp_size);
 }
 
 TEST_F(DynamicArrayTest, OperatorIndexReturnsCorrectValue) {
@@ -81,7 +88,8 @@ TEST_F(DynamicArrayTest, CopyConstructorCopiesElements) {
 
     DynamicArray<int> copy(arr);
 
-    EXPECT_EQ(copy.size(), 2);
+    const size_t exp_size = 2;
+    EXPECT_EQ(copy.size(), exp_size);
     EXPECT_EQ(copy[0], 5);
     EXPECT_EQ(copy[1], 10);
 }
@@ -107,7 +115,8 @@ TEST_F(DynamicArrayTest, CopyAssignmentCopiesElements) {
 
     other = arr;
 
-    EXPECT_EQ(other.size(), 2);
+    const size_t exp_size = 2;
+    EXPECT_EQ(other.size(), exp_size);
     EXPECT_EQ(other[0], 1);
     EXPECT_EQ(other[1], 2);
 }
@@ -118,7 +127,8 @@ TEST_F(DynamicArrayTest, SelfCopyAssignmentDoesNothing) {
     arr.push_back(8);
 
     EXPECT_NO_THROW(arr = arr);
-    EXPECT_EQ(arr.size(), 2);
+    const size_t exp_size = 2;
+    EXPECT_EQ(arr.size(), exp_size);
     EXPECT_EQ(arr[0], 4);
     EXPECT_EQ(arr[1], 8);
 }
@@ -130,7 +140,8 @@ TEST_F(DynamicArrayTest, PushBackManyElements) {
     for (int i = 0; i < N; i++)
         arr.push_back(i);
 
-    EXPECT_EQ(arr.size(), N);
+    const size_t exp_size = 5000;
+    EXPECT_EQ(arr.size(), exp_size);
 
     for (int i = 0; i < N; i++)
         EXPECT_EQ(arr[i], i);
