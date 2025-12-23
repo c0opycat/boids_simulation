@@ -18,7 +18,9 @@ namespace bd {
         const DynamicArray<Boid>& getBoids() const;
         Settings& getSettings() const;
         void addBoids(const size_t count);
+        void addBoid(const Boid& boid);
         void removeBoids(const size_t count);
+        void clearBoids();
         void updateBoids(const float deltaTime);
     };
 }

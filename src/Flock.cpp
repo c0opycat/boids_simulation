@@ -7,15 +7,16 @@
 #include <cmath>
 
 bd::Flock::Flock(Settings& settings) : _settings(settings) {
-    _settings.setN(0);
     _boids = DynamicArray<Boid>();
     addBoids(n_def);
 }
 
 bd::Flock::Flock(const size_t nb_boids, Settings& settings) : _settings(settings) {
-    _settings.setN(0);
     _boids = DynamicArray<Boid>();
-    addBoids(nb_boids);
+    if (nb_boids < n_min) {
+        addBoids(n_min);
+    }
+    else addBoids(nb_boids);
 }
 
 const DynamicArray<bd::Boid>& bd::Flock::getBoids() const {
@@ -48,6 +49,13 @@ void bd::Flock::addBoids(const size_t count) {
     _settings.setN(_boids.size());
 }
 
+void bd::Flock::addBoid(const Boid& boid) {
+    if (_boids.size() < n_max) {
+        _boids.push_back(boid);
+        _settings.setN(_boids.size());
+    }
+}
+
 void bd::Flock::removeBoids(const size_t count) {
     size_t real_count = count;
     const size_t nb_boids = _settings.getN();
@@ -62,6 +70,10 @@ void bd::Flock::removeBoids(const size_t count) {
 
 void bd::Flock::updateBoids(const float deltaTime) {
     // TO DO when rules are implemented
+}
+
+void bd::Flock::clearBoids() {
+    _boids = DynamicArray<Boid>();
 }
 
 

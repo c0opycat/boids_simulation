@@ -19,6 +19,15 @@ TEST(FlockTest, NbBoidsConstructor) {
     EXPECT_EQ(&flock.getSettings(), &settings);
 }
 
+TEST(FlockTest, NbBoidsConstructorPastMin) {
+    const size_t nb_boids = 2;
+    bd::Settings settings;
+    bd::Flock flock(nb_boids, settings);
+    EXPECT_EQ(flock.getBoids().size(), bd::n_min);
+    EXPECT_EQ(settings.getN(), bd::n_min);
+    EXPECT_EQ(&flock.getSettings(), &settings);
+}
+
 TEST(FlockTest, AddBoids) {
     const size_t initial_boids = 10;
     const size_t boids_to_add = 5;
@@ -75,4 +84,28 @@ TEST(FlockTest, RemoveBoidsPastMin) {
 
     EXPECT_EQ(flock.getBoids().size(), bd::n_min);
     EXPECT_EQ(settings.getN(), bd::n_min);
+}
+
+TEST(FlockTest, AddBoid) {
+    const size_t initial_boids = 10;
+    bd::Settings settings;
+    bd::Flock flock(initial_boids, settings);
+
+    bd::Boid new_boid(5.f, 5.f, 0.f, 0.f);
+    flock.addBoid(new_boid);
+
+    EXPECT_EQ(flock.getBoids().size(), initial_boids + 1);
+    EXPECT_EQ(settings.getN(), initial_boids + 1);
+    EXPECT_EQ(flock.getBoids()[initial_boids].getPosition().getX(), 5.f);
+    EXPECT_EQ(flock.getBoids()[initial_boids].getPosition().getY(), 5.f);
+}
+
+TEST(FlockTest, ClearBoids) {
+    const size_t initial_boids = 20;
+    bd::Settings settings;
+    bd::Flock flock(initial_boids, settings);
+
+    flock.clearBoids();
+
+    EXPECT_EQ(flock.getBoids().size(), 0);
 }

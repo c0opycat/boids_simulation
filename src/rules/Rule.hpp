@@ -12,6 +12,6 @@ namespace bd {
     class Rule {
     public:
         virtual ~Rule() {}
-        virtual Vec2<float> apply(Boid& boid, Flock& flock) = 0;
+        virtual const Vec2<float> apply(const Boid& boid, const Flock& flock) const = 0;
     };
 }
