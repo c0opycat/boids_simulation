@@ -107,5 +107,7 @@ TEST(FlockTest, ClearBoids) {
 
     flock.clearBoids();
 
-    EXPECT_EQ(flock.getBoids().size(), 0);
+    const size_t expected = 0;
+
+    EXPECT_EQ(flock.getBoids().size(), expected);
 }
