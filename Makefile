@@ -10,10 +10,14 @@ OBJS = $(patsubst src/%.cpp,build/%.o,$(SRCS))
 # Executable name
 EXEC = build/boids_simulation
 
-.PHONY: all clean
+.PHONY: all clean docs
 
 # Default target
 all: $(EXEC) run
+
+# Doxygen documentation target
+docs:
+	doxygen
 
 # Rule to link the executable
 $(EXEC): $(OBJS) | build
@@ -39,3 +43,4 @@ run: $(EXEC)
 clean:
 	rm -f $(OBJS) $(EXEC)
 	rm -rf build
+	rm -rf docs
