@@ -4,7 +4,7 @@ CXXFLAGS = -std=c++20 -Wall -Wextra -Isrc -Ilib/SFML/include -DSFML_STATIC
 LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 
 # Source files and object files
-SRCS = src/main.cpp src/Utils.cpp src/Settings.cpp src/Boid.cpp src/Flock.cpp src/rules/CohesionRule.cpp src/rules/SeparationRule.cpp
+SRCS = src/main.cpp src/utils/Utils.cpp src/Settings.cpp src/Boid.cpp src/Flock.cpp src/rules/CohesionRule.cpp src/rules/SeparationRule.cpp src/rules/AlignementRule.cpp
 OBJS = $(patsubst src/%.cpp,build/%.o,$(SRCS))
 
 # Executable name
@@ -21,12 +21,14 @@ docs:
 
 # Rule to link the executable
 $(EXEC): $(OBJS) | build
-	$(CXX) $(LDFLAGS) -o $@ $^
+	$(CXX) -o $@ $^ $(LDFLAGS)
 
 # Rule to create the build directory
 build:
 	mkdir -p build
+	mkdir -p build/utils
 	mkdir -p build/rules
+
 
 # Rule to compile source files into object files
 # This is a pattern rule. It will match for each .cpp file.

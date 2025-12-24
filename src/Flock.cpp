@@ -70,6 +70,17 @@ void bd::Flock::removeBoids(const size_t count) {
 
 void bd::Flock::updateBoids(const float deltaTime) {
     // TO DO when rules are implemented
+    //test juste ajout de speed pour voir si ils bougent
+
+    for (size_t i = 0; i < _boids.size(); i++) {
+        Boid& boid = _boids[i];
+
+
+        Vec2<float> speed = {0.1f, 0.1f};
+        boid.addSpeed(speed);
+        boid.UpdatePosition(deltaTime);
+    }
+
 }
 
 void bd::Flock::clearBoids() {
