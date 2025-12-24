@@ -17,6 +17,12 @@ add_executable(boids_simulation
         src/Utils.cpp
         src/Flock.cpp
         src/Flock.hpp
+        src/rules/CohesionRule.hpp
+        src/rules/CohesionRule.cpp
+        src/rules/SeparationRule.cpp
+        src/rules/SeparationRule.hpp
+        src/rules/AlignementRule.cpp
+        src/rules/AlignementRule.hpp
 )
 
 target_link_libraries(boids_simulation PRIVATE sfml-graphics)
