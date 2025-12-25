@@ -4,6 +4,9 @@
 
 #include "Flock.hpp"
 #include "utils/Utils.hpp"
+#include "rules/AlignementRule.hpp"
+#include "rules/CohesionRule.hpp"
+#include "rules/SeparationRule.hpp"
 #include <cmath>
 
 bd::Flock::Flock(Settings& settings) : _settings(settings) {
@@ -69,7 +72,20 @@ void bd::Flock::removeBoids(const size_t count) {
 }
 
 void bd::Flock::updateBoids(const float deltaTime) {
-    // TO DO when rules are implemented
+    const CohesionRule cr;
+    const SeparationRule sr;
+    const AlignementRule ar;
+    for (size_t i = 0; i < _boids.size(); i++) {
+        Vec2<float> speed = _boids[i].getSpeed();
+        const Vec2<float> correction =
+            cr.apply(_boids[i], *this) * _settings.getWCoh() +
+                sr.apply(_boids[i], *this) * _settings.getWSep() +
+                    ar.apply(_boids[i], *this) * _settings.getWAli();
+        Vec2<float> newSpeed = speed + correction;
+
+        _boids[i].setSpeed(newSpeed.normalize_max(_settings.getVMax()));
+        _boids[i].setPosition(_boids[i].getPosition() + _boids[i].getSpeed() * deltaTime);
+    }
 }
 
 void bd::Flock::clearBoids() {
