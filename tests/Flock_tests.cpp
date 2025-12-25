@@ -108,6 +108,21 @@ TEST(FlockTest, ClearBoids) {
     flock.clearBoids();
 
     const size_t expected = 0;
-
     EXPECT_EQ(flock.getBoids().size(), expected);
 }
+
+TEST(FlockTest, AreNeighbors) {
+    bd::Settings settings;
+    const bd::Flock flock(settings);
+
+    const bd::Boid b1(0.f, 0.f, 0.f, 0.f);
+    const bd::Boid b2(5.f, 0.f, 0.f, 0.f);
+    const bd::Boid b3(0.f, 55.f, 0.f, 0.f);
+    const bd::Boid b4(0.f, 0.f, 0.f, 0.f);
+
+    EXPECT_TRUE(flock.areNeighbors(b1, b2));
+    EXPECT_FALSE(flock.areNeighbors(b1, b3));
+    EXPECT_FALSE(flock.areNeighbors(b1, b4)); // Same boid, so not neighbors
+}
+
+    

@@ -76,5 +76,12 @@ void bd::Flock::clearBoids() {
     _boids = DynamicArray<Boid>();
 }
 
+bool bd::Flock::areNeighbors(const Boid &b1, const Boid &b2) const {
+    const Vec2<float> diff = b2.getPosition() - b1.getPosition();
+    const float distance = diff.length();
+
+    return b1 != b2 && distance < static_cast<float>(_settings.getR());
+}
+
 
 

@@ -74,5 +74,13 @@ namespace bd {
          * @param deltaTime The time elapsed since the last update.
          */
         void updateBoids(const float deltaTime);
+
+        /**
+         * @brief Checks if two boids are neighbors and different.
+         * @param b1 The first boid.
+         * @param b2 The second boid.
+         * @return True if the boids are neighbors, false otherwise.
+         */
+        bool areNeighbors(const Boid& b1, const Boid& b2) const;
     };
 }
