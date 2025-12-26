@@ -21,7 +21,9 @@ const Vec2<float> bd::SeparationRule::apply(const Boid &boid, const Flock &flock
 
             if (distance < flock.getSettings().getDMin()) {
                 const float distSqr = distance * distance;
-                force += diff/distSqr;
+                if (distSqr > 0) {
+                    force += diff/distSqr;
+                }
             }
         }
     }

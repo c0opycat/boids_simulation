@@ -46,7 +46,7 @@ int main() {
             }
         }
 
-        float deltaTime = clock.getElapsedTime().asMilliseconds();
+        float deltaTime = clock.restart().asSeconds() * 100;
 
         flock.updateBoids(deltaTime);
 

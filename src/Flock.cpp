@@ -37,8 +37,8 @@ void bd::Flock::addBoids(const size_t count) {
         real_count = n_max - nb_boids;
     }
     for (size_t i = 0; i < real_count; i++) {
-        float px = Utils::Random::rand_float(0.f, _settings.getWidth());
-        float py = Utils::Random::rand_float(0.f, _settings.getHeight());
+        const float px = Utils::Random::rand_float(0.f, _settings.getWidth());
+        const float py = Utils::Random::rand_float(0.f, _settings.getHeight());
         float sx = Utils::Random::rand_float(-_settings.getVMax(), _settings.getVMax());
         float sy = Utils::Random::rand_float(-_settings.getVMax(), _settings.getVMax());
         float speed = std::hypot(sx, sy);
@@ -76,15 +76,39 @@ void bd::Flock::updateBoids(const float deltaTime) {
     const SeparationRule sr;
     const AlignementRule ar;
     for (size_t i = 0; i < _boids.size(); i++) {
-        Vec2<float> speed = _boids[i].getSpeed();
-        const Vec2<float> correction =
+        Vec2<float> correction =
             cr.apply(_boids[i], *this) * _settings.getWCoh() +
                 sr.apply(_boids[i], *this) * _settings.getWSep() +
                     ar.apply(_boids[i], *this) * _settings.getWAli();
-        Vec2<float> newSpeed = speed + correction;
 
-        _boids[i].setSpeed(newSpeed.normalize_max(_settings.getVMax()));
-        _boids[i].setPosition(_boids[i].getPosition() + _boids[i].getSpeed() * deltaTime);
+        correction = correction.normalize_max(_settings.getAMax());
+
+        Vec2<float> speed = _boids[i].getSpeed() + correction;
+
+        speed = speed.normalize_max(_settings.getVMax());
+
+        _boids[i].setPosition(_boids[i].getPosition() + speed * deltaTime);
+
+        Vec2<float> pos = _boids[i].getPosition();
+
+        if (pos.getX() < 0) {
+            pos.setX(0);
+            speed.setX(-speed.getX());
+        } else if (pos.getX() > _settings.getWidth()) {
+            pos.setX(_settings.getWidth());
+            speed.setX(-speed.getX());
+        }
+
+        if (pos.getY() < 0) {
+            pos.setY(0);
+            speed.setY(-speed.getY());
+        } else if (pos.getY() > _settings.getHeight()) {
+            pos.setY(_settings.getHeight());
+            speed.setY(-speed.getY());
+        }
+
+        _boids[i].setPosition(pos);
+        _boids[i].setSpeed(speed);
     }
 }
 
@@ -97,6 +121,16 @@ bool bd::Flock::areNeighbors(const Boid &b1, const Boid &b2) const {
     const float distance = diff.length();
 
     return b1 != b2 && distance < static_cast<float>(_settings.getR());
+}
+
+bool bd::Flock::isInBounds(const Boid &boid) const {
+    if ((boid.getPosition().getX() < 0
+        || boid.getPosition().getX() > _settings.getWidth())
+         && ( boid.getPosition().getY() < 0  || boid.getPosition().getY() > _settings.getHeight())) {
+        return false;
+    }else {
+        return true;
+    }
 }
 
 

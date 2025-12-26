@@ -9,12 +9,12 @@ add_executable(boids_simulation
         src/main.cpp
         src/containers/DynamicArray.hpp
         src/containers/Vec2.hpp
-        src/Utils.hpp
+        src/utils/Utils.cpp
+        src/utils/Utils.hpp
         src/Boid.cpp
         src/Boid.hpp
         src/Settings.cpp
         src/Settings.hpp
-        src/Utils.cpp
         src/Flock.cpp
         src/Flock.hpp
         src/rules/CohesionRule.hpp
@@ -23,6 +23,7 @@ add_executable(boids_simulation
         src/rules/SeparationRule.hpp
         src/rules/AlignementRule.cpp
         src/rules/AlignementRule.hpp
+        src/utils/Utils.cpp
 )
 
 target_link_libraries(boids_simulation PRIVATE sfml-graphics)

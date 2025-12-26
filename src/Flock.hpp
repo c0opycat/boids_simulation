@@ -82,5 +82,7 @@ namespace bd {
          * @return True if the boids are neighbors, false otherwise.
          */
         bool areNeighbors(const Boid& b1, const Boid& b2) const;
+
+        bool isInBounds(const Boid& boid) const;
     };
 }
