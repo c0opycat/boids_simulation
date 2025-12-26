@@ -4,6 +4,9 @@
 
 #include "Flock.hpp"
 #include "utils/Utils.hpp"
+#include "rules/AlignementRule.hpp"
+#include "rules/CohesionRule.hpp"
+#include "rules/SeparationRule.hpp"
 #include <cmath>
 
 bd::Flock::Flock(Settings& settings) : _settings(settings) {
@@ -69,22 +72,31 @@ void bd::Flock::removeBoids(const size_t count) {
 }
 
 void bd::Flock::updateBoids(const float deltaTime) {
-    // TO DO when rules are implemented
-    //test juste ajout de speed pour voir si ils bougent
-
+    const CohesionRule cr;
+    const SeparationRule sr;
+    const AlignementRule ar;
     for (size_t i = 0; i < _boids.size(); i++) {
-        Boid& boid = _boids[i];
+        Vec2<float> speed = _boids[i].getSpeed();
+        const Vec2<float> correction =
+            cr.apply(_boids[i], *this) * _settings.getWCoh() +
+                sr.apply(_boids[i], *this) * _settings.getWSep() +
+                    ar.apply(_boids[i], *this) * _settings.getWAli();
+        Vec2<float> newSpeed = speed + correction;
 
-
-        Vec2<float> speed = {0.1f, 0.1f};
-        boid.addSpeed(speed);
-        boid.UpdatePosition(deltaTime);
+        _boids[i].setSpeed(newSpeed.normalize_max(_settings.getVMax()));
+        _boids[i].setPosition(_boids[i].getPosition() + _boids[i].getSpeed() * deltaTime);
     }
-
 }
 
 void bd::Flock::clearBoids() {
     _boids = DynamicArray<Boid>();
+}
+
+bool bd::Flock::areNeighbors(const Boid &b1, const Boid &b2) const {
+    const Vec2<float> diff = b2.getPosition() - b1.getPosition();
+    const float distance = diff.length();
+
+    return b1 != b2 && distance < static_cast<float>(_settings.getR());
 }
 
 

@@ -3,6 +3,7 @@
 //
 
 #include "SeparationRule.hpp"
+#include "../utils/Utils.hpp"
 
 const Vec2<float> bd::SeparationRule::apply(const Boid &boid, const Flock &flock) const {
     const Vec2<float> p = boid.getPosition();
@@ -13,16 +14,17 @@ const Vec2<float> bd::SeparationRule::apply(const Boid &boid, const Flock &flock
 
     for (size_t i = 0; i < nb_boids; ++i) {
         const Vec2<float> pi = boids[i].getPosition();
-        Vec2<float> diff = p - pi;
-        float distSqr = diff.getX()*diff.getX() + diff.getY()*diff.getY();
 
-        //pour éviter la division par 0 si c'est le même boid
-        if (distSqr > 0) {
-            force += diff/distSqr;
+        if (flock.areNeighbors(boid, boids[i])) {
+            const Vec2<float> diff = p - pi;
+            const float distance = diff.length();
+
+            if (distance < flock.getSettings().getDMin()) {
+                const float distSqr = distance * distance;
+                force += diff/distSqr;
+            }
         }
-
     }
 
     return force;
-
 }

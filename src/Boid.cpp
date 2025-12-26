@@ -36,6 +36,14 @@ void Boid::UpdatePosition(float dt) {
     _position += _speed * dt;
 }
 
+bool Boid::operator==(const Boid& other) const {
+    return _position == other._position && _speed == other._speed;
+}
+
+bool Boid::operator!=(const Boid& other) const {
+    return !(*this == other);
+}
+
 std::ostream &bd::operator<<(std::ostream& os, const Boid& boid) {
     return os << "Position : " <<boid.getPosition() << " / vitesse : " << boid.getSpeed() << std::endl;
 }

@@ -108,6 +108,41 @@ TEST(FlockTest, ClearBoids) {
     flock.clearBoids();
 
     const size_t expected = 0;
-
     EXPECT_EQ(flock.getBoids().size(), expected);
 }
+
+TEST(FlockTest, AreNeighbors) {
+    bd::Settings settings;
+    const bd::Flock flock(settings);
+
+    const bd::Boid b1(0.f, 0.f, 0.f, 0.f);
+    const bd::Boid b2(5.f, 0.f, 0.f, 0.f);
+    const bd::Boid b3(0.f, 55.f, 0.f, 0.f);
+    const bd::Boid b4(0.f, 0.f, 0.f, 0.f);
+
+    EXPECT_TRUE(flock.areNeighbors(b1, b2));
+    EXPECT_FALSE(flock.areNeighbors(b1, b3));
+    EXPECT_FALSE(flock.areNeighbors(b1, b4)); // Same boid, so not neighbors
+}
+
+TEST(FlockTest, UpdateBoidsChangesPositions) {
+    bd::Settings settings;
+    settings.setVMax(10.f);
+    bd::Flock flock(settings);
+    flock.clearBoids();
+
+    const bd::Boid initial_boid(0.f, 0.f, 5.f, 0.f);
+    flock.addBoid(initial_boid);
+    const float deltaTime = 1.0f;
+
+    flock.updateBoids(deltaTime);
+
+    const bd::Boid& updated_boid = flock.getBoids()[0];
+
+    EXPECT_FLOAT_EQ(updated_boid.getPosition().getX(), 5.f);
+    EXPECT_FLOAT_EQ(updated_boid.getPosition().getY(), 0.f);
+    EXPECT_FLOAT_EQ(updated_boid.getSpeed().getX(), 5.f);
+    EXPECT_FLOAT_EQ(updated_boid.getSpeed().getY(), 0.f);
+}
+
+    

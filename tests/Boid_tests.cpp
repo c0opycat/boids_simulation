@@ -62,3 +62,24 @@ TEST(BoidTest, UpdatePosition) {
 
 }
 
+TEST(BoidTest, Equality) {
+    Boid b1(10.f, 20.f, 1.f, -2.f);
+    Boid b2(10.f, 20.f, 1.f, -2.f);
+    Boid b3(11.f, 20.f, 1.f, -2.f);
+    Boid b4(10.f, 21.f, 1.f, -2.f);
+    Boid b5(10.f, 20.f, 2.f, -2.f);
+    Boid b6(10.f, 20.f, 1.f, -1.f);
+
+    EXPECT_TRUE(b1 == b2);
+    EXPECT_FALSE(b1 == b3);
+    EXPECT_FALSE(b1 == b4);
+    EXPECT_FALSE(b1 == b5);
+    EXPECT_FALSE(b1 == b6);
+
+    EXPECT_FALSE(b1 != b2);
+    EXPECT_TRUE(b1 != b3);
+    EXPECT_TRUE(b1 != b4);
+    EXPECT_TRUE(b1 != b5);
+    EXPECT_TRUE(b1 != b6);
+}
+

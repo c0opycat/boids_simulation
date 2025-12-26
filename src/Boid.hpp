@@ -28,6 +28,8 @@ namespace bd {
         void UpdatePosition(float dt);
         void addSpeed(const Vec2<float>& newSpeed);
 
+        bool operator==(const Boid& other) const;
+        bool operator!=(const Boid& other) const;
     };
 
     std::ostream& operator<<(std::ostream& os, const Boid& boid);
