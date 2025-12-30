@@ -11,7 +11,7 @@
 
 bd::Flock::Flock(Settings& settings) : _settings(settings) {
     _boids = DynamicArray<Boid>();
-    addBoids(n_def);
+    addBoids(_settings.getN());
 }
 
 bd::Flock::Flock(const size_t nb_boids, Settings& settings) : _settings(settings) {
