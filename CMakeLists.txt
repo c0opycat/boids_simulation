@@ -24,6 +24,8 @@ add_executable(boids_simulation
         src/rules/AlignementRule.cpp
         src/rules/AlignementRule.hpp
         src/utils/Utils.cpp
+        src/Simulation.cpp
+        src/Simulation.hpp
 )
 
 target_link_libraries(boids_simulation PRIVATE sfml-graphics)
