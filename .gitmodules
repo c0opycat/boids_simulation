@@ -1,3 +1,6 @@
 [submodule "lib/googletest"]
 	path = lib/googletest
 	url = https://github.com/google/googletest.git
+[submodule "lib/sfml-widgets"]
+	path = lib/sfml-widgets
+	url = https://github.com/abodelot/sfml-widgets.git

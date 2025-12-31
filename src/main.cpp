@@ -1,7 +1,3 @@
-//
-// Created by arthur on 28/11/2025.
-//
-
 #include "utils/Utils.hpp"
 #include "Simulation.hpp"
 
@@ -10,7 +6,7 @@ int main() {
 
     bd::Settings settings;
     bd::Flock flock(settings);
-    const bd::Simulation simulation(flock);
+    bd::Simulation simulation(flock);
 
     simulation.run();
 

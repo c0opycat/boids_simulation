@@ -23,13 +23,13 @@ add_executable(boids_simulation
         src/rules/SeparationRule.hpp
         src/rules/AlignementRule.cpp
         src/rules/AlignementRule.hpp
-        src/utils/Utils.cpp
         src/Simulation.cpp
         src/Simulation.hpp
 )
+
+target_include_directories(boids_simulation PRIVATE lib/sfml-widgets/src)
 
 target_link_libraries(boids_simulation PRIVATE sfml-graphics)
 
 # Enable testing
 enable_testing()
-

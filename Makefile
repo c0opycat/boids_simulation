@@ -1,14 +1,24 @@
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -std=c++20 -Wall -Wextra -Isrc -Ilib/SFML/include -DSFML_STATIC
-LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
+CXXFLAGS = -std=c++20 -Wall -Wextra -Isrc -Ilib/sfml-widgets/src -DSFML_STATIC
+LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -lGL
 
 # Source files and object files
-SRCS = src/main.cpp src/utils/Utils.cpp src/Settings.cpp src/Boid.cpp src/Flock.cpp src/rules/CohesionRule.cpp src/rules/SeparationRule.cpp src/rules/AlignementRule.cpp src/Simulation.cpp
+SRCS = $(wildcard src/*.cpp) $(wildcard src/rules/*.cpp) $(wildcard src/utils/*.cpp)
 OBJS = $(patsubst src/%.cpp,build/%.o,$(SRCS))
+
+# sfml-widgets source and object files
+WIDGET_SRCS = $(shell find lib/sfml-widgets/src -name "*.cpp")
+WIDGET_OBJS = $(patsubst lib/sfml-widgets/src/%.cpp,build/sfml-widgets/%.o,$(WIDGET_SRCS))
+
+# All object files
+ALL_OBJS = $(OBJS) $(WIDGET_OBJS)
 
 # Executable name
 EXEC = build/boids_simulation
+
+# Create a list of all directories to be created
+DIRS = $(sort $(dir $(ALL_OBJS)))
 
 .PHONY: all clean docs
 
@@ -20,22 +30,19 @@ docs:
 	doxygen
 
 # Rule to link the executable
-$(EXEC): $(OBJS) | build
+$(EXEC): $(ALL_OBJS)
 	$(CXX) -o $@ $^ $(LDFLAGS)
 
-# Rule to create the build directory
-build:
-	mkdir -p build
-	mkdir -p build/utils
-	mkdir -p build/rules
+# Rule to create the build directories
+$(DIRS):
+	mkdir -p $@
 
+# Rule to compile project source files
+build/%.o: src/%.cpp | $(DIRS)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Rule to compile source files into object files
-# This is a pattern rule. It will match for each .cpp file.
-# $< is the first prerequisite (the .cpp file)
-# $@ is the target (the .o file)
-# The -Isrc flag is added to tell the compiler where to find headers.
-build/%.o: src/%.cpp | build
+# Rule to compile sfml-widgets source files
+build/sfml-widgets/%.o: lib/sfml-widgets/src/%.cpp | $(DIRS)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Rule to run the executable
@@ -44,6 +51,5 @@ run: $(EXEC)
 
 # Rule to clean up generated files
 clean:
-	rm -f $(OBJS) $(EXEC)
 	rm -rf build
 	rm -rf docs
