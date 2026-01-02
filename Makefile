@@ -3,6 +3,20 @@ CXX = g++
 CXXFLAGS = -std=c++20 -Wall -Wextra -Isrc -Ilib/sfml-widgets/src -DSFML_STATIC
 LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -lGL
 
+# --- Submodule Check ---
+# This rule checks if the submodule files are present and initializes them if not.
+# It makes the build process seamless for new users.
+SUBMODULE_SENTINEL := lib/sfml-widgets/src/Gui/Widget.hpp
+
+all: $(SUBMODULE_SENTINEL)
+	@$(MAKE) --no-print-directory build_project
+
+$(SUBMODULE_SENTINEL):
+	@echo "--- Initializing submodules ---"
+	@git submodule update --init --recursive
+
+# --- Project Build ---
+
 # Source files and object files
 SRCS = $(wildcard src/*.cpp) $(wildcard src/rules/*.cpp) $(wildcard src/utils/*.cpp)
 OBJS = $(patsubst src/%.cpp,build/%.o,$(SRCS))
@@ -20,10 +34,10 @@ EXEC = build/boids_simulation
 # Create a list of all directories to be created
 DIRS = $(sort $(dir $(ALL_OBJS)))
 
-.PHONY: all clean docs
+.PHONY: all clean docs build_project
 
-# Default target
-all: $(EXEC) run
+# Real build target
+build_project: $(EXEC) run
 
 # Doxygen documentation target
 docs:
