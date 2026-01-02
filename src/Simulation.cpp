@@ -1,11 +1,10 @@
 #include "Simulation.hpp"
-#include "Gui/Slider.hpp"
-#include "Gui/Label.hpp"
-#include "Gui/Theme.hpp"
 #include <string>
 #include <functional>
 #include <sstream>
 #include <iomanip>
+#include <iostream>
+#include <cmath>
 
 // Helper to convert a float to a string with a specific precision
 std::string to_string_with_precision(const float value, int precision = 3) {
@@ -15,12 +14,20 @@ std::string to_string_with_precision(const float value, int precision = 3) {
 }
 
 const float SLIDER_LENGTH = 150.f;
+const std::string SAVE_DIR = "save/";
 
 bd::Simulation::Simulation(Flock &flock) :
     _flock(flock),
     _window(sf::VideoMode(flock.getSettings().getWidth(), flock.getSettings().getHeight()), "Boids simulation"),
-    _menu(nullptr)
+    _menu(nullptr),
+    _n_label(nullptr),
+    _n_slider(nullptr),
+    _configTextBox(nullptr)
 {
+    _floatSliders = DynamicArray<SliderWidgetPair>();
+    _intSliders = DynamicArray<SliderWidgetPair>();
+    _floatSliderNames = DynamicArray<std::string>();
+    _intSliderNames = DynamicArray<std::string>();
     _window.setFramerateLimit(60);
     if (!gui::Theme::loadFont("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf")) {
         std::cerr << "Failed to load font for UI!" << std::endl;
@@ -30,7 +37,7 @@ bd::Simulation::Simulation(Flock &flock) :
 
 bd::Simulation::~Simulation()
 {
-    delete _menu;
+    delete _menu; // The menu is responsible for deleting its children widgets
 }
 
 void bd::Simulation::addFloatSlider(const std::string& name, const float min, const float max, const float initial, const std::function<void(float)>& setter)
@@ -48,6 +55,8 @@ void bd::Simulation::addFloatSlider(const std::string& name, const float min, co
     });
     _menu->add(label);
     _menu->add(slider);
+    _floatSliders.push_back({label, slider});
+    _floatSliderNames.push_back(name);
 }
 
 void bd::Simulation::addIntSlider(const std::string& name, const size_t min, const size_t max, const size_t initial, const std::function<void(size_t)>& setter)
@@ -59,12 +68,46 @@ void bd::Simulation::addIntSlider(const std::string& name, const size_t min, con
     const size_t value = (initial - min) * 100 / (max - min);
     slider->setValue(static_cast<int>(value));
     slider->setCallback([label, slider, name, min, max, setter] {
-        const size_t newValue = slider->getValue() * (max - min) / 100 + min;
+        const size_t newValue = static_cast<size_t>(round(static_cast<float>(slider->getValue()) * static_cast<float>(max - min) / 100.f + min));
         setter(newValue);
         label->setText(name + ": " + std::to_string(newValue));
     });
     _menu->add(label);
     _menu->add(slider);
+    _intSliders.push_back({label, slider});
+    _intSliderNames.push_back(name);
+}
+
+void bd::Simulation::updateAllUISliders()
+{
+    Settings& settings = _flock.getSettings();
+
+    // Update Boid Count slider
+    _n_label->setText("Boids: " + std::to_string(settings.getN()));
+    const size_t n_value = (settings.getN() - n_min) * 100 / (n_max - n_min);
+    _n_slider->setValue(static_cast<int>(n_value));
+
+    // Update other int sliders
+    const size_t r_val = (settings.getR() - r_min) * 100 / (r_max - r_min);
+    _intSliders[0].slider->setValue(static_cast<int>(r_val));
+    _intSliders[0].label->setText(_intSliderNames[0] + ": " + std::to_string(settings.getR()));
+
+    const size_t dmin_val = (settings.getDMin() - dmin_min) * 100 / (dmin_max - dmin_min);
+    _intSliders[1].slider->setValue(static_cast<int>(dmin_val));
+    _intSliders[1].label->setText(_intSliderNames[1] + ": " + std::to_string(settings.getDMin()));
+
+    // Update float sliders
+    const float wcoh_val = settings.getWCoh() * 100;
+    _floatSliders[0].slider->setValue(static_cast<int>(wcoh_val));
+    _floatSliders[0].label->setText(_floatSliderNames[0] + ": " + to_string_with_precision(settings.getWCoh()));
+
+    const float wsep_val = settings.getWSep() * 100;
+    _floatSliders[1].slider->setValue(static_cast<int>(wsep_val));
+    _floatSliders[1].label->setText(_floatSliderNames[1] + ": " + to_string_with_precision(settings.getWSep()));
+
+    const float wali_val = settings.getWAli() * 100;
+    _floatSliders[2].slider->setValue(static_cast<int>(wali_val));
+    _floatSliders[2].label->setText(_floatSliderNames[2] + ": " + to_string_with_precision(settings.getWAli()));
 }
 
 
@@ -74,16 +117,48 @@ void bd::Simulation::initUI() {
     _menu = new gui::Menu(_window);
     _menu->setPosition(10, 10);
 
+    // Save/Load file management
+    _configTextBox = new gui::TextBox();
+    _configTextBox->setText("config_1.txt");
+    _menu->add(_configTextBox);
+
+    gui::Button* loadButton = new gui::Button("Load");
+    loadButton->setCallback([this] {
+        const std::string filename = _configTextBox->getText();
+        if (!filename.empty()) {
+            const size_t current_boids = _flock.getSettings().getN();
+            _flock.getSettings().loadFile(SAVE_DIR + filename);
+            const size_t new_nb_boids = _flock.getSettings().getN();
+
+            if (new_nb_boids > current_boids) {
+                _flock.addBoids(new_nb_boids - current_boids);
+            } else if (new_nb_boids < current_boids) {
+                _flock.removeBoids(current_boids - new_nb_boids);
+            }
+            updateAllUISliders();
+        }
+    });
+    _menu->add(loadButton);
+
+    gui::Button* saveButton = new gui::Button("Save");
+    saveButton->setCallback([this] {
+        const std::string filename = _configTextBox->getText();
+        if (!filename.empty()) {
+            _flock.getSettings().saveToFile(SAVE_DIR + filename);
+        }
+    });
+    _menu->add(saveButton);
+
     // Boid Count (N)
-    gui::Label* n_label = new gui::Label("Boids: " + std::to_string(settings.getN()));
-    gui::Slider* n_slider = new gui::Slider(SLIDER_LENGTH);
-    n_label->setFillColor(sf::Color::White);
-    n_slider->setStep(1);
+    _n_label = new gui::Label("Boids: " + std::to_string(settings.getN()));
+    _n_slider = new gui::Slider(SLIDER_LENGTH);
+    _n_label->setFillColor(sf::Color::White);
+    _n_slider->setStep(1);
     const size_t value = (settings.getN() - n_min) * 100 / (n_max - n_min);
-    n_slider->setValue(static_cast<int>(value));
-    n_slider->setCallback([n_label, n_slider, this] {
+    _n_slider->setValue(static_cast<int>(value));
+    _n_slider->setCallback([this] {
         Settings& s = _flock.getSettings();
-        const size_t new_nb_boids = n_slider->getValue() * (n_max - n_min) / 100 + n_min;
+        const size_t new_nb_boids = static_cast<size_t>(round(static_cast<double>(_n_slider->getValue()) * static_cast<double>(n_max - n_min) / 100.f + static_cast<double>(n_min)));
         const size_t current_boids = s.getN();
         if (new_nb_boids != current_boids) {
             if (new_nb_boids > current_boids) {
@@ -92,12 +167,12 @@ void bd::Simulation::initUI() {
                 _flock.removeBoids(current_boids - new_nb_boids);
             }
         }
-        n_label->setText("Boids: " + std::to_string(s.getN()));
+        _n_label->setText("Boids: " + std::to_string(s.getN()));
     });
-    _menu->add(n_label);
-    _menu->add(n_slider);
+    _menu->add(_n_label);
+    _menu->add(_n_slider);
 
-    // other sliders
+    // Other sliders
     addIntSlider("Perception radius", r_min, r_max, settings.getR(), [&](const size_t val){ _flock.getSettings().setR(val); });
     addIntSlider("Minimal distance", dmin_min, dmin_max, settings.getDMin(), [&](const size_t val){ _flock.getSettings().setDMin(val); });
     addFloatSlider("Cohesion weight", 0.f, 1.f, settings.getWCoh(), [&](const float val){ _flock.getSettings().setWCoh(val); });
@@ -140,7 +215,7 @@ void bd::Simulation::run() {
 
         _window.clear(sf::Color::Black);
 
-        const DynamicArray<bd::Boid> boids = _flock.getBoids();
+        const DynamicArray<bd::Boid>& boids = _flock.getBoids();
         for (size_t i = 0; i < boids.size(); ++i) {
             drawBoid(boids[i]);
         }

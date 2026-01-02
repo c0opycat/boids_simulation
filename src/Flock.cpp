@@ -1,7 +1,3 @@
-//
-// Created by lcooper on 03/12/2025.
-//
-
 #include "Flock.hpp"
 #include "utils/Utils.hpp"
 #include "rules/AlignementRule.hpp"
@@ -61,7 +57,7 @@ void bd::Flock::addBoid(const Boid& boid) {
 
 void bd::Flock::removeBoids(const size_t count) {
     size_t real_count = count;
-    const size_t nb_boids = _settings.getN();
+    const size_t nb_boids = _boids.size();
     if (nb_boids - count < n_min) {
         real_count = nb_boids - n_min;
     }
@@ -132,6 +128,3 @@ bool bd::Flock::isInBounds(const Boid &boid) const {
         return true;
     }
 }
-
-
-
