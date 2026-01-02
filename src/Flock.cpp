@@ -4,7 +4,7 @@
 
 #include "Flock.hpp"
 #include "utils/Utils.hpp"
-#include "rules/AlignementRule.hpp"
+#include "rules/AlignmentRule.hpp"
 #include "rules/CohesionRule.hpp"
 #include "rules/SeparationRule.hpp"
 #include <cmath>
@@ -74,7 +74,7 @@ void bd::Flock::removeBoids(const size_t count) {
 void bd::Flock::updateBoids(const float deltaTime) {
     const CohesionRule cr;
     const SeparationRule sr;
-    const AlignementRule ar;
+    const AlignmentRule ar;
     for (size_t i = 0; i < _boids.size(); i++) {
         Vec2<float> correction =
             cr.apply(_boids[i], *this) * _settings.getWCoh() +
