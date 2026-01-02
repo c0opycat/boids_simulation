@@ -21,8 +21,8 @@ add_executable(boids_simulation
         src/rules/CohesionRule.cpp
         src/rules/SeparationRule.cpp
         src/rules/SeparationRule.hpp
-        src/rules/AlignementRule.cpp
-        src/rules/AlignementRule.hpp
+        src/rules/AlignmentRule.cpp
+        src/rules/AlignmentRule.hpp
         src/Simulation.cpp
         src/Simulation.hpp
 )
