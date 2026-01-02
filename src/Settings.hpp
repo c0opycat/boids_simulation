@@ -183,14 +183,15 @@ namespace bd {
         ///@}
 
         /**
-         * @brief Displays the current settings on the console.
-         */
-        void display() const;
-
-        /**
          * @brief Saves the current settings to a file.
          * @param configFilePath Path to the configuration file.
          */
         void saveToFile(const std::string& configFilePath) const;
+
+        /**
+         * @brief Loads a file into the current settings.
+         * @param configFilePath Path to the configuration file.
+         */
+        void loadFile(const std::string& configFilePath);
     };
 }

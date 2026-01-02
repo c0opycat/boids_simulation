@@ -10,8 +10,25 @@
 #include "Boid.hpp"
 #include "Flock.hpp"
 #include "Gui/Menu.hpp"
+#include "Gui/Button.hpp"
+#include "Gui/TextBox.hpp"
+#include "Gui/Label.hpp"
+#include "Gui/Slider.hpp"
+#include "containers/DynamicArray.hpp"
+#include <string>
+
 
 namespace bd {
+
+    /**
+     * @struct SliderWidgetPair
+     * @brief A simple struct to hold a pair of related Label and Slider widgets.
+     */
+    struct SliderWidgetPair {
+        gui::Label* label;
+        gui::Slider* slider;
+    };
+
     /**
      * @class Simulation
      * @brief Manages the main application loop, rendering, and UI for the boids simulation.
@@ -47,28 +64,43 @@ namespace bd {
         void initUI();
 
         /**
+         * @brief Updates all UI sliders to reflect the current settings values.
+         */
+        void updateAllUISliders();
+
+        /**
          * @brief Helper function to create a slider for a float setting.
          * @param name The label for the slider.
-         * @param min The minimum value of the setting's range.
-         * @param max The maximum value of the setting's range.
+         * @param min The minimum value of the setting.
+         * @param max The maximum value of the setting.
          * @param initial The initial value of the setting.
          * @param setter A function/lambda to be called when the slider's value changes.
          */
-        void addFloatSlider(const std::string& name, const float min, const float max, const float initial, const std::function<void(float)>& setter);
+        void addFloatSlider(const std::string& name, float min, float max, float initial, const std::function<void(float)>& setter);
 
         /**
          * @brief Helper function to create a slider for a size_t setting.
          * @param name The label for the slider.
-         * @param min The minimum value of the setting's range.
-         * @param max The maximum value of the setting's range.
+         * @param min The minimum value of the setting.
+         * @param max The maximum value of the setting.
          * @param initial The initial value of the setting.
          * @param setter A function/lambda to be called when the slider's value changes.
          */
-        void addIntSlider(const std::string& name, const size_t min, const size_t max, const size_t initial, const std::function<void(size_t)>& setter);
+        void addIntSlider(const std::string& name, size_t min, size_t max, size_t initial, const std::function<void(size_t)>& setter);
 
         const float BOID_SIZE = 5.f; ///< Visual size of the boids.
         bd::Flock& _flock;           ///< Reference to the flock being simulated.
         sf::RenderWindow _window;    ///< The main application window.
         gui::Menu* _menu;            ///< The root UI element containing the settings controls.
+
+        // Pointers to UI elements to be able to update them
+        gui::Label* _n_label;
+        gui::Slider* _n_slider;
+        gui::TextBox* _configTextBox;
+        DynamicArray<SliderWidgetPair> _floatSliders;
+        DynamicArray<SliderWidgetPair> _intSliders;
+        DynamicArray<std::string> _floatSliderNames;
+        DynamicArray<std::string> _intSliderNames;
+
     };
 }
