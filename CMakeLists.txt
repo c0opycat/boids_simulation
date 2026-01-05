@@ -25,6 +25,8 @@ add_executable(boids_simulation
         src/rules/AlignmentRule.hpp
         src/Simulation.cpp
         src/Simulation.hpp
+        src/rules/TargetingRule.cpp
+        src/rules/TargetingRule.hpp
 )
 
 target_include_directories(boids_simulation PRIVATE lib/sfml-widgets/src)

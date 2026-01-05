@@ -21,6 +21,6 @@ const Vec2<float> bd::CohesionRule::apply(const bd::Boid& boid, const bd::Flock&
     if (nb_neighbors == 0) {
         return {0.f, 0.f};
     }
-    
+
     return sum_diff_positions / static_cast<float>(nb_neighbors);
 }

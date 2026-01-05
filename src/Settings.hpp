@@ -42,6 +42,7 @@ namespace bd {
         float _wcoh;    ///< Weight for the cohesion rule.
         float _wsep;    ///< Weight for the separation rule.
         float _wali;    ///< Weight for the alignment rule.
+        float _wtar;    ///< Weight for the targeting rule.
 
     public:
         /**
@@ -117,6 +118,12 @@ namespace bd {
          * @return The alignment weight.
          */
         float getWAli() const;
+
+        /**
+         * @brief Gets the weight for the targeting rule.
+         * @return The targeting weight.
+         */
+        float getWTar() const;
         ///@}
 
         /** @name Setters */
@@ -180,6 +187,12 @@ namespace bd {
          * @param alignment_w The new alignment weight.
          */
         void setWAli(const float alignment_w);
+
+        /**
+         * @brief Sets the weight for the targeting rule.
+         * @param targeting_w The new targeting weight.
+         */
+        void setWTar(const float targeting_w);
         ///@}
 
         /**

@@ -88,7 +88,7 @@ namespace bd {
          */
         void addIntSlider(const std::string& name, size_t min, size_t max, size_t initial, const std::function<void(size_t)>& setter);
 
-        const float BOID_SIZE = 5.f; ///< Visual size of the boids.
+        const float BOID_SIZE = 2.f; ///< Visual size of the boids.
         bd::Flock& _flock;           ///< Reference to the flock being simulated.
         sf::RenderWindow _window;    ///< The main application window.
         gui::Menu* _menu;            ///< The root UI element containing the settings controls.

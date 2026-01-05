@@ -72,8 +72,9 @@ namespace bd {
         /**
          * @brief Updates the state of all boids in the flock.
          * @param deltaTime The time elapsed since the last update.
+         * @param target The target that the boids follow
          */
-        void updateBoids(const float deltaTime);
+        void updateBoids(const float deltaTime,const Vec2<float>& target);
 
         /**
          * @brief Checks if two boids are neighbors and different.

@@ -5,6 +5,8 @@
 #include "rules/SeparationRule.hpp"
 #include <cmath>
 
+#include "rules/TargetingRule.hpp"
+
 bd::Flock::Flock(Settings& settings) : _settings(settings) {
     _boids = DynamicArray<Boid>();
     addBoids(_settings.getN());
@@ -67,15 +69,17 @@ void bd::Flock::removeBoids(const size_t count) {
     _settings.setN(_boids.size());
 }
 
-void bd::Flock::updateBoids(const float deltaTime) {
+void bd::Flock::updateBoids(const float deltaTime, const Vec2<float>& target) {
     const CohesionRule cr;
     const SeparationRule sr;
     const AlignmentRule ar;
+    const TargetingRule tr(target);
     for (size_t i = 0; i < _boids.size(); i++) {
         Vec2<float> correction =
             cr.apply(_boids[i], *this) * _settings.getWCoh() +
                 sr.apply(_boids[i], *this) * _settings.getWSep() +
-                    ar.apply(_boids[i], *this) * _settings.getWAli();
+                    ar.apply(_boids[i], *this) * _settings.getWAli() +
+                        tr.apply(_boids[i], *this) * _settings.getWTar();
 
         correction = correction.normalize_max(_settings.getAMax());
 

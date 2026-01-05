@@ -16,7 +16,8 @@ namespace bd {
     _dmin(20),
     _wcoh(0.01f),
     _wsep(0.05f),
-    _wali(0.125f) {}
+    _wali(0.125f),
+    _wtar(0.05) {}
 
     Settings::Settings(const std::string& configFilePath) :
     _n(n_def),
@@ -28,7 +29,8 @@ namespace bd {
     _dmin(20),
     _wcoh(0.01f),
     _wsep(0.05f),
-    _wali(0.125f) {
+    _wali(0.125f),
+    _wtar(0.005) {
         loadFile(configFilePath);
     }
 
@@ -71,6 +73,11 @@ namespace bd {
     float Settings::getWAli() const {
         return _wali;
     }
+
+    float Settings::getWTar() const {
+        return _wtar;
+    }
+
 
     void Settings::setN(const size_t nb_boids) {
         if (Utils::is_between(nb_boids, n_min, n_max)) {
@@ -124,6 +131,12 @@ namespace bd {
         }
     }
 
+    void Settings::setWTar(const float targeting_w) {
+        if (Utils::is_between(targeting_w, 0.f, 1.f)) {
+            _wtar = targeting_w;
+        }
+    }
+
     void Settings::saveToFile(const std::string& configFilePath) const {
         std::ofstream configFile(configFilePath);
         if (!configFile.is_open()) {
@@ -140,6 +153,7 @@ namespace bd {
             configFile << "wcoh=" << getWCoh() << "\n";
             configFile << "wsep=" << getWSep() << "\n";
             configFile << "wali=" << getWAli() << "\n";
+            configFile << "wtar=" << getWTar() << "\n";
         }
     }
 
@@ -165,6 +179,7 @@ namespace bd {
                         else if (key == "wcoh") setWCoh(std::stof(value));
                         else if (key == "wsep") setWSep(std::stof(value));
                         else if (key == "wali") setWAli(std::stof(value));
+                        else if (key == "wtar") setWTar(std::stof(value));
                     } catch (const std::invalid_argument& e) {
                         std::cerr << "Could not parse the value for " << key << std::endl;
                     }

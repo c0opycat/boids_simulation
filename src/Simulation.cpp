@@ -210,8 +210,11 @@ void bd::Simulation::run() {
             }
         }
 
+        const Vec2<float> target(sf::Mouse::getPosition(_window).x, sf::Mouse::getPosition(_window).y);
+
         const float deltaTime = clock.restart().asSeconds() * 100;
-        _flock.updateBoids(deltaTime);
+
+        _flock.updateBoids(deltaTime, target);
 
         _window.clear(sf::Color::Black);
 
