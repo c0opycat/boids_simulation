@@ -25,7 +25,7 @@ To generate the Doxygen API documentation, run:
 ```bash
 make docs
 ```
-The documentation will be generated in the `docs/html` directory. Open `docs/html/index.html` or `docs.html` in your web browser.
+The documentation will be generated in the `docs/html` directory. Open `docs/html/index.html` in your web browser.
 
 ## Project Structure
 
@@ -51,4 +51,3 @@ The documentation will be generated in the `docs/html` directory. Open `docs/htm
 -   `tests/`: Contains unit tests for various components.
 -   `Makefile`: Project Makefile for building, running, and generating docs.
 -   `Doxyfile`: Doxygen configuration file.
--   `docs.html`: A link to the documentation.
