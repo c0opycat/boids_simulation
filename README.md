@@ -33,6 +33,7 @@ The documentation will be generated in the `docs/html` directory. Open `docs/htm
     -   `Boid.hpp`, `Boid.cpp`: Defines the Boid class.
     -   `Flock.hpp`, `Flock.cpp`: Manages the collection of boids.
     -   `Settings.hpp`, `Settings.cpp`: Handles simulation parameters.
+    -   `Simulation.hpp`, `Simulation.cpp`: Manages the boids simulation.
     -   `main.cpp`: The entry point of the application.
     -   `containers/`: Generic data structures.
         -   `DynamicArray.hpp`: Custom dynamic array.
@@ -49,7 +50,3 @@ The documentation will be generated in the `docs/html` directory. Open `docs/htm
 -   `Makefile`: Project Makefile for building, running, and generating docs.
 -   `Doxyfile`: Doxygen configuration file.
 -   `docs.html`: A link to the documentation.
-
----
-
-**Note:** This project is part of a university course for Object-Oriented Conception.
