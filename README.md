@@ -46,6 +46,8 @@ The documentation will be generated in the `docs/html` directory. Open `docs/htm
         -   `TargetingRule.hpp`, `TargetingRule.cpp`: Targeting rule implementation.
     -   `utils/`: Utility functions.
         -   `Utils.hpp`, `Utils.cpp`: General utility functions.
+-   `lib/`: External libraries.
+    -   `sfml-widgets/`: A custom GUI library used for interactive UI components in the simulation.
 -   `tests/`: Contains unit tests for various components.
 -   `Makefile`: Project Makefile for building, running, and generating docs.
 -   `Doxyfile`: Doxygen configuration file.
