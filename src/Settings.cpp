@@ -2,6 +2,7 @@
 #include "utils/Utils.hpp"
 #include <fstream>
 #include <sstream>
+#include <filesystem>
 
 namespace bd {
     Settings::Settings() :
@@ -136,6 +137,17 @@ namespace bd {
     }
 
     void Settings::saveToFile(const std::string& configFilePath) const {
+        std::filesystem::path filePath(configFilePath);
+        std::filesystem::path dirPath = filePath.parent_path();
+
+        if (!dirPath.empty() && !std::filesystem::exists(dirPath)) {
+            std::error_code ec;
+            if (!std::filesystem::create_directories(dirPath, ec)) {
+                std::cerr << "Error creating directory " << dirPath << ": " << ec.message() << std::endl;
+                return;
+            }
+        }
+
         std::ofstream configFile(configFilePath);
         if (!configFile.is_open()) {
             std::cerr << "Could not open file " << configFilePath << std::endl;
