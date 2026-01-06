@@ -1,5 +1,3 @@
-
-
 #include "Settings.hpp"
 #include "utils/Utils.hpp"
 #include <fstream>

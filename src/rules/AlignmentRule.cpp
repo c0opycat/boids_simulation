@@ -1,14 +1,10 @@
-//
-// Created by arthur on 24/12/2025.
-//
-
 #include "AlignmentRule.hpp"
 
 #include "Rule.hpp"
 
 const Vec2<float> bd::AlignmentRule::apply(const Boid &boid, const Flock &flock) const {
     const Vec2<float> v = boid.getSpeed();
-    const DynamicArray<bd::Boid>& boids = flock.getBoids();
+    const DynamicArray<Boid>& boids = flock.getBoids();
     const size_t nb_boids = boids.size();
     size_t nb_neighbors = 0;
 

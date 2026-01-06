@@ -102,6 +102,13 @@ TEST(SettingsTest, GettersAndSetters) {
     ASSERT_FLOAT_EQ(s.getWAli(), 0.5f);
     s.setWAli(1.1f);
     ASSERT_FLOAT_EQ(s.getWAli(), 0.5f);
+
+    s.setWTar(0.8f);
+    ASSERT_FLOAT_EQ(s.getWTar(), 0.8f);
+    s.setWTar(-0.2f);
+    ASSERT_FLOAT_EQ(s.getWTar(), 0.8f);
+    s.setWTar(1.2f);
+    ASSERT_FLOAT_EQ(s.getWTar(), 0.8f);
 }
 
 TEST(SettingsTest, SaveToFile) {
@@ -118,6 +125,7 @@ TEST(SettingsTest, SaveToFile) {
     s.setWCoh(0.5f);
     s.setWSep(0.5f);
     s.setWAli(0.5f);
+    s.setWTar(0.05f);
 
     s.saveToFile(filename);
 
@@ -139,7 +147,8 @@ TEST(SettingsTest, SaveToFile) {
         "dmin=30\n"
         "wcoh=0.5\n"
         "wsep=0.5\n"
-        "wali=0.5\n";
+        "wali=0.5\n"
+        "wtar=0.05\n";
 
     ASSERT_EQ(file_content, expected_content);
 

@@ -16,8 +16,12 @@ add_executable(tests_run gtest_main.cpp
 target_sources( tests_run PRIVATE
         ../src/Boid.cpp
         ../src/Settings.cpp
-        ../src/Utils.cpp
+        ../src/utils/Utils.cpp
         ../src/Flock.cpp
+        ../src/rules/AlignmentRule.cpp
+        ../src/rules/CohesionRule.cpp
+        ../src/rules/SeparationRule.cpp
+        ../src/rules/TargetingRule.cpp
         )
 
 target_link_libraries(tests_run gtest gtest_main)

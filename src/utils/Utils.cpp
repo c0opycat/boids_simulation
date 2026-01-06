@@ -1,7 +1,3 @@
-//
-// Created by lcooper on 30/11/2025.
-//
-
 #include "Utils.hpp"
 
 namespace Utils {

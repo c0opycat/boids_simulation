@@ -1,12 +1,8 @@
-//
-// Created by lcooper on 05/12/2025.
-//
-
 #include "CohesionRule.hpp"
 
-const Vec2<float> bd::CohesionRule::apply(const bd::Boid& boid, const bd::Flock& flock) const {
+const Vec2<float> bd::CohesionRule::apply(const Boid& boid, const Flock& flock) const {
     const Vec2<float> p = boid.getPosition();
-    const DynamicArray<bd::Boid>& boids = flock.getBoids();
+    const DynamicArray<Boid>& boids = flock.getBoids();
     const size_t nb_boids = boids.size();
     size_t nb_neighbors = 0;
 

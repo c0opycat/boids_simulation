@@ -1,7 +1,3 @@
-//
-// Created by arthur on 01/12/2025.
-//
-
 #include "Boid.hpp"
 
 using namespace bd;

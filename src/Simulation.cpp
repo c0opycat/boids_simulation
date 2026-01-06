@@ -1,4 +1,5 @@
 #include "Simulation.hpp"
+#include <cmath>
 #include <string>
 #include <functional>
 #include <sstream>
@@ -7,7 +8,7 @@
 #include <cmath>
 
 // Helper to convert a float to a string with a specific precision
-std::string to_string_with_precision(const float value, int precision = 3) {
+std::string to_string_with_precision(const float value, const int precision = 3) {
     std::ostringstream out;
     out << std::fixed << std::setprecision(precision) << value;
     return out.str();
@@ -68,8 +69,8 @@ void bd::Simulation::addIntSlider(const std::string& name, const size_t min, con
     const size_t value = (initial - min) * 100 / (max - min);
     slider->setValue(static_cast<int>(value));
     slider->setCallback([label, slider, name, min, max, setter] {
-        const size_t newValue = static_cast<size_t>(round(static_cast<float>(slider->getValue()) * static_cast<float>(max - min) / 100.f + min));
-        setter(newValue);
+        const float newValue = std::round(static_cast<float>(slider->getValue()) * static_cast<float>(max - min) / 100.f + static_cast<float>(min));
+        setter(static_cast<size_t>(newValue));
         label->setText(name + ": " + std::to_string(newValue));
     });
     _menu->add(label);
@@ -80,7 +81,7 @@ void bd::Simulation::addIntSlider(const std::string& name, const size_t min, con
 
 void bd::Simulation::updateAllUISliders()
 {
-    Settings& settings = _flock.getSettings();
+    const Settings& settings = _flock.getSettings();
 
     // Update Boid Count slider
     _n_label->setText("Boids: " + std::to_string(settings.getN()));
@@ -180,7 +181,7 @@ void bd::Simulation::initUI() {
     addFloatSlider("Alignment weight", 0.f, 1.f, settings.getWAli(), [&](const float val){ _flock.getSettings().setWAli(val); });
 }
 
-void bd::Simulation::drawBoid(const bd::Boid& boid) {
+void bd::Simulation::drawBoid(const Boid& boid) {
     sf::ConvexShape triangle;
     triangle.setPointCount(3);
     triangle.setPoint(0, sf::Vector2f(BOID_SIZE, 0));
@@ -192,7 +193,7 @@ void bd::Simulation::drawBoid(const bd::Boid& boid) {
     triangle.setOutlineThickness(1.f);
 
     triangle.setPosition(boid.getPosition().getX(), boid.getPosition().getY());
-    const float angle = atan2(boid.getSpeed().getY(), boid.getSpeed().getX()) * 180.f / M_PI;
+    const float angle = static_cast<float>(atan2(boid.getSpeed().getY(), boid.getSpeed().getX()) * 180.f / M_PI);
     triangle.setRotation(angle);
 
     _window.draw(triangle);
@@ -210,7 +211,9 @@ void bd::Simulation::run() {
             }
         }
 
-        const Vec2<float> target(sf::Mouse::getPosition(_window).x, sf::Mouse::getPosition(_window).y);
+        const float xf = static_cast<float>(sf::Mouse::getPosition(_window).x);
+        const float yf = static_cast<float>(sf::Mouse::getPosition(_window).y);
+        const Vec2<float> target(xf, yf);
 
         const float deltaTime = clock.restart().asSeconds() * 100;
 
@@ -218,7 +221,7 @@ void bd::Simulation::run() {
 
         _window.clear(sf::Color::Black);
 
-        const DynamicArray<bd::Boid>& boids = _flock.getBoids();
+        const DynamicArray<Boid>& boids = _flock.getBoids();
         for (size_t i = 0; i < boids.size(); ++i) {
             drawBoid(boids[i]);
         }

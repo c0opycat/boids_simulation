@@ -17,18 +17,16 @@
 #include "containers/DynamicArray.hpp"
 #include <string>
 
+/**
+ * @struct SliderWidgetPair
+ * @brief A simple struct to hold a pair of related Label and Slider widgets.
+ */
+struct SliderWidgetPair {
+    gui::Label* label;   ///< Pointer to the Label widget associated with the slider.
+    gui::Slider* slider; ///< Pointer to the Slider widget.
+};
 
 namespace bd {
-
-    /**
-     * @struct SliderWidgetPair
-     * @brief A simple struct to hold a pair of related Label and Slider widgets.
-     */
-    struct SliderWidgetPair {
-        gui::Label* label;
-        gui::Slider* slider;
-    };
-
     /**
      * @class Simulation
      * @brief Manages the main application loop, rendering, and UI for the boids simulation.
@@ -39,7 +37,7 @@ namespace bd {
          * @brief Constructs the main simulation environment.
          * @param flock A reference to the Flock object to be simulated and controlled.
          */
-        Simulation(bd::Flock& flock);
+        Simulation(Flock& flock);
 
         /**
          * @brief Destructor, cleans up dynamically allocated UI components.
@@ -89,11 +87,12 @@ namespace bd {
         void addIntSlider(const std::string& name, size_t min, size_t max, size_t initial, const std::function<void(size_t)>& setter);
 
         const float BOID_SIZE = 2.f; ///< Visual size of the boids.
-        bd::Flock& _flock;           ///< Reference to the flock being simulated.
+        Flock& _flock;           ///< Reference to the flock being simulated.
         sf::RenderWindow _window;    ///< The main application window.
         gui::Menu* _menu;            ///< The root UI element containing the settings controls.
 
-        // Pointers to UI elements to be able to update them
+        /** @name Pointers to UI elements */
+        ///@{
         gui::Label* _n_label;
         gui::Slider* _n_slider;
         gui::TextBox* _configTextBox;
@@ -101,6 +100,6 @@ namespace bd {
         DynamicArray<SliderWidgetPair> _intSliders;
         DynamicArray<std::string> _floatSliderNames;
         DynamicArray<std::string> _intSliderNames;
-
+        ///@}
     };
 }

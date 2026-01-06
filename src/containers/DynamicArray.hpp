@@ -1,6 +1,8 @@
-//
-// Created by arthur on 28/11/2025.
-//
+/**
+ * @file DynamicArray.hpp
+ * @brief Contains the declaration of the DynamicArray template class.
+ */
+
 #pragma once
 #include <iostream>
 #include <stdexcept>
@@ -15,9 +17,9 @@
  */
 template <typename T>
 class DynamicArray {
-    T* _data; /**< Pointer to the underlying array storing elements. */
-    size_t _size; /**< The number of elements currently in the array. */
-    size_t _capacity; /**< The total number of elements the array can hold without reallocating. */
+    T* _data;         ///< Pointer to the underlying array storing elements.
+    size_t _size;     ///< The number of elements currently in the array.
+    size_t _capacity; ///< The total number of elements the array can hold without reallocating.
 
     /**
      * @brief Resizes array to a new capacity.

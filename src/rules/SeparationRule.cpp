@@ -1,13 +1,9 @@
-//
-// Created by arthur on 24/12/2025.
-//
-
 #include "SeparationRule.hpp"
 #include "../utils/Utils.hpp"
 
 const Vec2<float> bd::SeparationRule::apply(const Boid &boid, const Flock &flock) const {
     const Vec2<float> p = boid.getPosition();
-    const DynamicArray<bd::Boid>& boids = flock.getBoids();
+    const DynamicArray<Boid>& boids = flock.getBoids();
     const size_t nb_boids = boids.size();
 
     Vec2<float> force{0.f, 0.f};

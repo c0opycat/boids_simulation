@@ -2,7 +2,15 @@
 
 ## Overview
 
-This project implements a 2D boids simulation, demonstrating emergent flocking behavior based on a few simple rules. Boids are autonomous agents that follow three basic rules: separation, cohesion, and alignment.
+This project is part of a university course for Object-Oriented Conception. It implements a 2D boids simulation, demonstrating emergent flocking behavior based on a few simple rules. Boids are autonomous agents that follow three basic rules: separation, cohesion, and alignment. They can also follow a target on the screen.
+
+## Requirements
+
+To build and run this project, you will need:
+*   A C++17 compatible compiler (e.g., g++).
+*   SFML (Simple and Fast Multimedia Library) development libraries (version 2.5 or higher).
+*   Doxygen (for generating API documentation).
+*   Google Test (for running unit tests, included as a submodule).
 
 ## Building and Running
 
@@ -32,6 +40,9 @@ The documentation will be generated in the `docs/html` directory. Open `docs/htm
     -   `rules/`: Implementations of boid behavior rules.
         -   `Rule.hpp`: Abstract base class for rules.
         -   `CohesionRule.hpp`, `CohesionRule.cpp`: Cohesion rule implementation.
+        -   `AlignmentRule.hpp`, `AlignmentRule.cpp`: Alignment rule implementation.
+        -   `SeparationRule.hpp`, `SeparationRule.cpp`: Separation rule implementation.
+        -   `TargetingRule.hpp`, `TargetingRule.cpp`: Targeting rule implementation.
     -   `utils/`: Utility functions.
         -   `Utils.hpp`, `Utils.cpp`: General utility functions.
 -   `tests/`: Contains unit tests for various components.

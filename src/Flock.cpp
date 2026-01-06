@@ -4,7 +4,6 @@
 #include "rules/CohesionRule.hpp"
 #include "rules/SeparationRule.hpp"
 #include <cmath>
-
 #include "rules/TargetingRule.hpp"
 
 bd::Flock::Flock(Settings& settings) : _settings(settings) {
@@ -35,8 +34,8 @@ void bd::Flock::addBoids(const size_t count) {
         real_count = n_max - nb_boids;
     }
     for (size_t i = 0; i < real_count; i++) {
-        const float px = Utils::Random::rand_float(0.f, _settings.getWidth());
-        const float py = Utils::Random::rand_float(0.f, _settings.getHeight());
+        const float px = Utils::Random::rand_float(0.f, static_cast<float>(_settings.getWidth()));
+        const float py = Utils::Random::rand_float(0.f, static_cast<float>(_settings.getHeight()));
         float sx = Utils::Random::rand_float(-_settings.getVMax(), _settings.getVMax());
         float sy = Utils::Random::rand_float(-_settings.getVMax(), _settings.getVMax());
         float speed = std::hypot(sx, sy);
@@ -90,20 +89,22 @@ void bd::Flock::updateBoids(const float deltaTime, const Vec2<float>& target) {
         _boids[i].setPosition(_boids[i].getPosition() + speed * deltaTime);
 
         Vec2<float> pos = _boids[i].getPosition();
+        const float win_width = static_cast<float>(_settings.getWidth());
+        const float win_height = static_cast<float>(_settings.getHeight());
 
         if (pos.getX() < 0) {
             pos.setX(0);
             speed.setX(-speed.getX());
-        } else if (pos.getX() > _settings.getWidth()) {
-            pos.setX(_settings.getWidth());
+        } else if (pos.getX() > win_width) {
+            pos.setX(win_width);
             speed.setX(-speed.getX());
         }
 
         if (pos.getY() < 0) {
             pos.setY(0);
             speed.setY(-speed.getY());
-        } else if (pos.getY() > _settings.getHeight()) {
-            pos.setY(_settings.getHeight());
+        } else if (pos.getY() > win_height) {
+            pos.setY(win_height);
             speed.setY(-speed.getY());
         }
 
@@ -125,10 +126,9 @@ bool bd::Flock::areNeighbors(const Boid &b1, const Boid &b2) const {
 
 bool bd::Flock::isInBounds(const Boid &boid) const {
     if ((boid.getPosition().getX() < 0
-        || boid.getPosition().getX() > _settings.getWidth())
-         && ( boid.getPosition().getY() < 0  || boid.getPosition().getY() > _settings.getHeight())) {
+        || boid.getPosition().getX() > static_cast<float>(_settings.getWidth()))
+         && ( boid.getPosition().getY() < 0  || boid.getPosition().getY() > static_cast<float>(_settings.getHeight()))) {
         return false;
-    }else {
-        return true;
     }
+    return true;
 }

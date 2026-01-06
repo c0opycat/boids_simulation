@@ -84,6 +84,11 @@ namespace bd {
          */
         bool areNeighbors(const Boid& b1, const Boid& b2) const;
 
+        /**
+         * @brief Checks if a boid is within the visible simulation bounds.
+         * @param boid The boid to check.
+         * @return True if the boid is in bounds, false otherwise.
+         */
         bool isInBounds(const Boid& boid) const;
     };
 }

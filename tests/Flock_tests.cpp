@@ -135,7 +135,7 @@ TEST(FlockTest, UpdateBoidsChangesPositions) {
     flock.addBoid(initial_boid);
     const float deltaTime = 1.0f;
 
-    flock.updateBoids(deltaTime);
+    flock.updateBoids(deltaTime, Vec2<float>(0.f, 0.f));
 
     const bd::Boid& updated_boid = flock.getBoids()[0];
 
