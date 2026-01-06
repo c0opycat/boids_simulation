@@ -4,10 +4,10 @@ CXXFLAGS = -std=c++20 -Wall -Wextra -I../src -Ilib/googletest/googletest/include
 LDFLAGS = -pthread
 
 # Test source files
-TEST_SRCS = gtest_main.cpp Vec2_tests.cpp
+TEST_SRCS = gtest_main.cpp Vec2_tests.cpp DynamicArray_tests.cpp Boid_tests.cpp Settings_tests.cpp Utils_tests.cpp Flock_tests.cpp CohesionRule_tests.cpp
 
 # Project source files to be tested
-PROJECT_SRCS =
+PROJECT_SRCS = ../src/Boid.cpp ../src/Settings.cpp ../src/utils/Utils.cpp ../src/Flock.cpp ../src/rules/CohesionRule.cpp ../src/rules/AlignmentRule.cpp ../src/rules/SeparationRule.cpp ../src/rules/TargetingRule.cpp
 
 # GoogleTest source files
 GTEST_SRCS = lib/googletest/googletest/src/gtest-all.cc
@@ -37,14 +37,17 @@ $(TEST_EXEC): $(OBJS) | ../build
 
 # Rule to compile test source files
 ../build/%.o: %.cpp
+	mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Rule to compile project source files
 ../build/%.o: ../src/%.cpp
+	mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Rule to compile gtest source files
 ../build/%.o: lib/googletest/googletest/src/%.cc
+	mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Rule to run the executable

@@ -7,13 +7,31 @@ find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
 
 add_executable(boids_simulation
         src/main.cpp
-        src/containers/DynamicArray.h++
+        src/containers/DynamicArray.hpp
         src/containers/Vec2.hpp
-        src/Utils.hpp
+        src/utils/Utils.cpp
+        src/utils/Utils.hpp
+        src/Boid.cpp
+        src/Boid.hpp
+        src/Settings.cpp
+        src/Settings.hpp
+        src/Flock.cpp
+        src/Flock.hpp
+        src/rules/CohesionRule.hpp
+        src/rules/CohesionRule.cpp
+        src/rules/SeparationRule.cpp
+        src/rules/SeparationRule.hpp
+        src/rules/AlignmentRule.cpp
+        src/rules/AlignmentRule.hpp
+        src/Simulation.cpp
+        src/Simulation.hpp
+        src/rules/TargetingRule.cpp
+        src/rules/TargetingRule.hpp
 )
+
+target_include_directories(boids_simulation PRIVATE lib/sfml-widgets/src)
 
 target_link_libraries(boids_simulation PRIVATE sfml-graphics)
 
 # Enable testing
 enable_testing()
-
